@@ -1,0 +1,31 @@
+private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {                                     
+        int radio = 0;
+
+        try {
+            radio = Integer.parseInt(radio1.getText());
+        } catch (NumberFormatException e) {
+            System.out.println("ERROR. Introduzca un numero");
+        }
+
+        int x = evt.getX();
+        int y = evt.getY();
+        int x1 = x - radio / 2;
+        int y1 = y - radio / 2;
+        for (int i = 0; i <= 10; i++) {
+
+            jPanel1.getGraphics().drawOval(x1, y1, radio, radio);
+
+            radio += 10;
+            x1 = x - radio / 2;
+            y1 = y - radio / 2;
+
+            try {
+                Thread.sleep(20);
+
+            } catch (InterruptedException ex) {
+                Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            jPanel1.repaint();
+        }
+
+    }
