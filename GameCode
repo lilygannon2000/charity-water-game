@@ -1,4 +1,44 @@
-es = []
+import random
+import pygame
+
+
+class Particle():
+
+    def __init__(self, pos=(0, 0), size=random.randrange(2, 15), life=1000):
+        self.pos = pos
+        self.size = size
+        self.color = pygame.Color(0, 0, random.randrange(0, 256))
+        self.age = 0
+        self.life = life
+        self.dead = False
+        self.alpha = 255
+        self.surface = self.update_surface()
+
+    def update(self, dt):
+        self.age += dt
+        if self.age > self.life:
+            self.dead = True
+        self.alpha = 255 * (1 - (self.age / self.life))
+
+    def update_surface(self):
+        surf = pygame.Surface((self.size*0.8, self.size*0.8))
+        surf.fill(self.color)
+        return surf
+
+    def draw(self, surface):
+        if self.dead:
+            return
+        self.surface.set_alpha(self.alpha)
+        surface.blit(self.surface, self.pos)
+        pygame.draw.circle(surface, self.color, self.pos, self.size)
+
+
+class ParticleTrail():
+    def __init__(self, pos, size, life):
+        self.pos = pos
+        self.size = size
+        self.life = life
+        self.particles = []
 
     def update(self, dt):
         particle = Particle(self.pos, size=self.size, life=self.life)
